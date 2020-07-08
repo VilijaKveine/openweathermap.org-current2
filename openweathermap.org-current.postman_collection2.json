@@ -1,0 +1,3192 @@
+{
+	"info": {
+		"_postman_id": "6096cb43-bca0-48b0-97f2-e7f49c2e42d3",
+		"name": "openweathermap.org/current",
+		"description": "I had to write few test scenarios for website openweathermap.org/current.\r\n\r\nFirst of all, i have read discription about given parameters requests should return some data, depends on parameters entered. So, i chossen to check given main parameters like authorization - how it works with correct API key and with incorrect one. \r\nCity ID checked with different possibilities: correct city id, when inserting letter, or negative number. \r\nCity name - tested different possible form mode-html, xml, json. how does it work.\r\nZIP code- tested negative and positive flows.\r\nCount(cnt) of cities - checked returns correct data when given correct data and when inccorrect.\r\nBbox bounding box [lon-left,lat-bottom,lon-right,lat-top,zoom]-  \r\nI checked too how it works when deleted one of url parameters - 2.5 - i guess it is one off internal server parameters. - response returns authorization error, severity - 3. \r\nMy observation briefly : the main \r\ndiscrepancy between response error code and error message - it could be more accurate. \r\np.s. Where are so many test scenarios to check various values, just need much more time.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request should return correct data when authorization API key is correct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "759363ff-99b6-4ebd-8cfc-91aa29cd0fb6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response=pm.response.json();\r",
+							"\r",
+							"var responseSchema = {\r",
+							"     \"coord\": {\r",
+							"        \"lon\": \"double\",\r",
+							"        \"lat\": \"double\"\r",
+							"    },\r",
+							"    \"weather\": [\r",
+							"        {\r",
+							"            \"id\": \"integer\",\r",
+							"            \"main\": \"string\",\r",
+							"            \"description\": \"string\",\r",
+							"            \"icon\": \"string\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"base\": \"string\",\r",
+							"    \"main\": {\r",
+							"        \"temp\": \"double\",\r",
+							"        \"feels_like\": \"double\",\r",
+							"        \"temp_min\": \"double\",\r",
+							"        \"temp_max\": \"double\",\r",
+							"        \"pressure\": \"integer\",\r",
+							"        \"humidity\": \"integer\"\r",
+							"    },\r",
+							"    \"visibility\": \"integer\",\r",
+							"    \"wind\": {\r",
+							"        \"speed\": \"double\",\r",
+							"        \"deg\": \"integer\",\r",
+							"        \r",
+							"    },\r",
+							"    \"clouds\": {\r",
+							"        \"all\": \"integer\"\r",
+							"    },\r",
+							"    \"dt\": \"integer\",\r",
+							"    \"sys\": {\r",
+							"        \"type\": \"integer\",\r",
+							"        \"id\": \"integer\",\r",
+							"        \"country\": \"string\",\r",
+							"        \"sunrise\": \"integer\",\r",
+							"        \"sunset\": \"integer\"\r",
+							"    },\r",
+							"    \"timezone\": \"double\",\r",
+							"    \"id\": \"integer\",\r",
+							"    \"name\": \"string\",\r",
+							"    \"cod\": \"integer\"\r",
+							"  };\r",
+							"  pm.test(\"response has valid schema\",function(){\r",
+							"    pm.expect(tv4.validate(response, responseSchema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "612d1f9e-7a6e-46b7-95b6-e61300691dec",
+						"exec": [
+							"pm.globals.set(\"cityId\",\"14256\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?id={{cityId}}&appid={{APIkey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{cityId}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "Test for check is correct data response when API key is correct.Test flow positive."
+			},
+			"response": [
+				{
+					"name": "Request should return correct data when authorization API key is correct",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/weather?id={{cityId}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{cityId}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:29:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "472"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?id=14256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coord\": {\n        \"lon\": 48.57,\n        \"lat\": 34.79\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04d\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 301.15,\n        \"feels_like\": 294.72,\n        \"temp_min\": 301.15,\n        \"temp_max\": 301.15,\n        \"pressure\": 1013,\n        \"humidity\": 21\n    },\n    \"visibility\": 10000,\n    \"wind\": {\n        \"speed\": 7.2,\n        \"deg\": 260\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1594207735,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 7461,\n        \"country\": \"IR\",\n        \"sunrise\": 1594172361,\n        \"sunset\": 1594224113\n    },\n    \"timezone\": 16200,\n    \"id\": 14256,\n    \"name\": \"Āzādshahr\",\n    \"cod\": 200\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return authorization error when  API key is incorrect",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39d8b73e-b376-4cbc-9e23-39c0def0338a",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Authorization error messsage\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "39f6adab-8089-4b09-aa70-9f2ff97f1ee0",
+						"exec": [
+							"pm.globals.set(\"cityId\", \"14256\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/weather?id={{cityId}}&appid={{InvalidAPIkey}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{cityId}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{InvalidAPIkey}}"
+						}
+					]
+				},
+				"description": "Test for check is response returns authorization error when API key is incorrect. Test pass"
+			},
+			"response": [
+				{
+					"name": "Request should return authorization error when  API key is incorrect",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?id={{cityId}}&appid={{InvalidAPIkey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{cityId}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{InvalidAPIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:29:09 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "107"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?id=14256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": 401,\n    \"message\": \"Invalid API key. Please see http://openweathermap.org/faq#error401 for more info.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return corect data when city id is correct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "def470e3-c935-49d3-907e-d4215e78fae6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var response=pm.response.json();\r",
+							"\r",
+							"var responseSchema = {\r",
+							"     \"coord\": {\r",
+							"        \"lon\": \"double\",\r",
+							"        \"lat\": \"double\"\r",
+							"    },\r",
+							"    \"weather\": [\r",
+							"        {\r",
+							"            \"id\": \"integer\",\r",
+							"            \"main\": \"string\",\r",
+							"            \"description\": \"string\",\r",
+							"            \"icon\": \"string\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"base\": \"string\",\r",
+							"    \"main\": {\r",
+							"        \"temp\": \"double\",\r",
+							"        \"feels_like\": \"double\",\r",
+							"        \"temp_min\": \"double\",\r",
+							"        \"temp_max\": \"double\",\r",
+							"        \"pressure\": \"integer\",\r",
+							"        \"humidity\": \"integer\"\r",
+							"    },\r",
+							"    \"visibility\": \"integer\",\r",
+							"    \"wind\": {\r",
+							"        \"speed\": \"double\",\r",
+							"        \"deg\": \"integer\",\r",
+							"\r",
+							"    },\r",
+							"    \"clouds\": {\r",
+							"        \"all\": \"integer\"\r",
+							"    },\r",
+							"    \"dt\": \"integer\",\r",
+							"    \"sys\": {\r",
+							"        \"type\": \"integer\",\r",
+							"        \"id\": \"integer\",\r",
+							"        \"country\": \"string\",\r",
+							"        \"sunrise\": \"integer\",\r",
+							"        \"sunset\": \"integer\"\r",
+							"    },\r",
+							"    \"timezone\": \"double\",\r",
+							"    \"id\": \"integer\",\r",
+							"    \"name\": \"string\",\r",
+							"    \"cod\": \"integer\"\r",
+							"  };\r",
+							"  pm.test(\"response has valid schema\",function(){\r",
+							"    pm.expect(tv4.validate(response, responseSchema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "20ffdc31-cfe5-4271-9d5a-adc2a7ad4ad9",
+						"exec": [
+							"pm.globals.set(\"cityId\",\"14256\");\r",
+							"pm.globals.set(\"APIkey\",\"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?id={{cityId}}&appid={{APIkey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{cityId}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "Test for check is correct data response when city id is correct.Test float possitive."
+			},
+			"response": [
+				{
+					"name": "Request should return corect data when city id is correct",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/weather?id={{cityId}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{cityId}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:28:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "472"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?id=14256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coord\": {\n        \"lon\": 48.57,\n        \"lat\": 34.79\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04d\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 301.15,\n        \"feels_like\": 294.72,\n        \"temp_min\": 301.15,\n        \"temp_max\": 301.15,\n        \"pressure\": 1013,\n        \"humidity\": 21\n    },\n    \"visibility\": 10000,\n    \"wind\": {\n        \"speed\": 7.2,\n        \"deg\": 260\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1594207735,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 7461,\n        \"country\": \"IR\",\n        \"sunrise\": 1594172361,\n        \"sunset\": 1594224113\n    },\n    \"timezone\": 16200,\n    \"id\": 14256,\n    \"name\": \"Āzādshahr\",\n    \"cod\": 200\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return validation error bad request when city id  is letter or negative number, but response just skips bad  requests, but counts like it's one of city IDs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea4138d2-5be1-4d47-babd-cf405733cb20",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches error code\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"400\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches error message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id list must be in range from 1 to 20\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "078d255c-d44f-47ae-b70b-a9fa484ad59b",
+						"exec": [
+							"pm.globals.set(\"cityIdMulti\", \"b,-524901,703448,2643743,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,v,14256,14256,14256,gbn14256\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/group?id={{cityIdMulti}}&appid={{APIkey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"group"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{cityIdMulti}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "1. Request should return validatione error bad request with a letter or negative number, or mixed(numbers with letters) id number, but there no any reaction, just ignore that id number is invalid. \r\nShould return validation error - bad request, city ID should be a float. \r\n2. This test should check is it realy returns error message with too long requested list and to check is the program counts all \"city IDs\" given no metter is it valid or not.\r\nAll given \"city IDs\" counts like valid, and returns message error with too long list of cities IDs (the range between 1-20).\r\n3. The same city ID number indicated like new one. It should not be."
+			},
+			"response": [
+				{
+					"name": "Request should return validation error bad request when city id  is letter or negative number, but response just skips bad  requests, but counts like it's one of city IDs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/group?id={{cityIdMulti}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"group"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{cityIdMulti}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:27:22 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/group?id=b,-524901,703448,2643743,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,v,14256,14256,14256,gbn14256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"400\",\n    \"message\": \"id list must be in range from 1 to 20\"\n}"
+				},
+				{
+					"name": "Request should return validation error bad request when city id  is letter or negative number, but response just skips bad  requests, but counts like it's one of city IDs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/group?id={{cityIdMulti}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"group"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{cityIdMulti}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:28:38 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/group?id=b,-524901,703448,2643743,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,v,14256,14256,14256,gbn14256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"400\",\n    \"message\": \"id list must be in range from 1 to 20\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return message error bad request with negative  id number, but response just skip bad  negative request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5d0df91f-146f-4caa-9d9c-48ec9967732b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1559cd57-26a2-4aa5-90a3-df6d44764ff8",
+						"exec": [
+							"pm.globals.set(\"cityIdMulti\", \"-524901,703448,2643743,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,v,14256,14256,14256,14256\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/group?id={{cityIdMulti}}&appid={{APIkey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"group"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{cityIdMulti}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "Request should return message error bad request with negative  id number, but there no any reaction, just ignore id number with negative meaning.\nShould return message error - bad request, negative id not allowed."
+			},
+			"response": [
+				{
+					"name": "Request should return message error bad request with negative  id number, but response just skip bad  negative request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/group?id={{cityIdMulti}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"group"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{cityIdMulti}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:28:18 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "7685"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/group?id=-524901,703448,2643743,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,v,14256,14256,14256,14256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cnt\": 18,\n    \"list\": [\n        {\n            \"coord\": {\n                \"lon\": 30.52,\n                \"lat\": 50.43\n            },\n            \"sys\": {\n                \"country\": \"UA\",\n                \"timezone\": 10800,\n                \"sunrise\": 1594173383,\n                \"sunset\": 1594231756\n            },\n            \"weather\": [\n                {\n                    \"id\": 803,\n                    \"main\": \"Clouds\",\n                    \"description\": \"broken clouds\",\n                    \"icon\": \"04d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 293.35,\n                \"feels_like\": 289.05,\n                \"temp_min\": 292.15,\n                \"temp_max\": 294.82,\n                \"pressure\": 1012,\n                \"humidity\": 59\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 7,\n                \"deg\": 320\n            },\n            \"clouds\": {\n                \"all\": 75\n            },\n            \"dt\": 1594206552,\n            \"id\": 703448,\n            \"name\": \"Kyiv\"\n        },\n        {\n            \"coord\": {\n                \"lon\": -0.13,\n                \"lat\": 51.51\n            },\n            \"sys\": {\n                \"country\": \"GB\",\n                \"timezone\": 3600,\n                \"sunrise\": 1594180415,\n                \"sunset\": 1594239437\n            },\n            \"weather\": [\n                {\n                    \"id\": 500,\n                    \"main\": \"Rain\",\n                    \"description\": \"light rain\",\n                    \"icon\": \"10d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 290.92,\n                \"feels_like\": 292.77,\n                \"temp_min\": 290.37,\n                \"temp_max\": 291.48,\n                \"pressure\": 1015,\n                \"humidity\": 92\n            },\n            \"wind\": {\n                \"speed\": 0.45,\n                \"deg\": 254\n            },\n            \"clouds\": {\n                \"all\": 100\n            },\n            \"dt\": 1594206581,\n            \"id\": 2643743,\n            \"name\": \"London\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Request should return message error bad request with negative  id number, but response just skip bad  negative request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/group?id={{cityIdMulti}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"group"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{cityIdMulti}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:27:12 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "7685"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/group?id=-524901,703448,2643743,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,14256,v,14256,14256,14256,14256"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cnt\": 18,\n    \"list\": [\n        {\n            \"coord\": {\n                \"lon\": 30.52,\n                \"lat\": 50.43\n            },\n            \"sys\": {\n                \"country\": \"UA\",\n                \"timezone\": 10800,\n                \"sunrise\": 1594173383,\n                \"sunset\": 1594231756\n            },\n            \"weather\": [\n                {\n                    \"id\": 803,\n                    \"main\": \"Clouds\",\n                    \"description\": \"broken clouds\",\n                    \"icon\": \"04d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 293.35,\n                \"feels_like\": 289.05,\n                \"temp_min\": 292.15,\n                \"temp_max\": 294.82,\n                \"pressure\": 1012,\n                \"humidity\": 59\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 7,\n                \"deg\": 320\n            },\n            \"clouds\": {\n                \"all\": 75\n            },\n            \"dt\": 1594206552,\n            \"id\": 703448,\n            \"name\": \"Kyiv\"\n        },\n        {\n            \"coord\": {\n                \"lon\": -0.13,\n                \"lat\": 51.51\n            },\n            \"sys\": {\n                \"country\": \"GB\",\n                \"timezone\": 3600,\n                \"sunrise\": 1594180415,\n                \"sunset\": 1594239437\n            },\n            \"weather\": [\n                {\n                    \"id\": 500,\n                    \"main\": \"Rain\",\n                    \"description\": \"light rain\",\n                    \"icon\": \"10d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 290.92,\n                \"feels_like\": 292.77,\n                \"temp_min\": 290.37,\n                \"temp_max\": 291.48,\n                \"pressure\": 1015,\n                \"humidity\": 92\n            },\n            \"wind\": {\n                \"speed\": 0.45,\n                \"deg\": 254\n            },\n            \"clouds\": {\n                \"all\": 100\n            },\n            \"dt\": 1594206581,\n            \"id\": 2643743,\n            \"name\": \"London\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        },\n        {\n            \"coord\": {\n                \"lon\": 48.57,\n                \"lat\": 34.79\n            },\n            \"sys\": {\n                \"country\": \"IR\",\n                \"timezone\": 16200,\n                \"sunrise\": 1594172361,\n                \"sunset\": 1594224113\n            },\n            \"weather\": [\n                {\n                    \"id\": 802,\n                    \"main\": \"Clouds\",\n                    \"description\": \"scattered clouds\",\n                    \"icon\": \"03d\"\n                }\n            ],\n            \"main\": {\n                \"temp\": 306.15,\n                \"feels_like\": 301.6,\n                \"temp_min\": 306.15,\n                \"temp_max\": 306.15,\n                \"pressure\": 1013,\n                \"humidity\": 14\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.1,\n                \"deg\": 130\n            },\n            \"clouds\": {\n                \"all\": 40\n            },\n            \"dt\": 1594206543,\n            \"id\": 14256,\n            \"name\": \"Āzādshahr\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return correct data when city  is correct (lat lon) geographic coordinates",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1fda1ac7-ac0a-4901-85e8-3a4859c34885",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response=pm.response.json();\r",
+							"\r",
+							"var responseSchema = {\r",
+							"     \"coord\": {\r",
+							"        \"lon\": \"double\",\r",
+							"        \"lat\": \"double\"\r",
+							"    },\r",
+							"    \"weather\": [\r",
+							"        {\r",
+							"            \"id\": \"integer\",\r",
+							"            \"main\": \"string\",\r",
+							"            \"description\": \"string\",\r",
+							"            \"icon\": \"string\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"base\": \"string\",\r",
+							"    \"main\": {\r",
+							"        \"temp\": \"double\",\r",
+							"        \"feels_like\": \"double\",\r",
+							"        \"temp_min\": \"double\",\r",
+							"        \"temp_max\": \"double\",\r",
+							"        \"pressure\": \"integer\",\r",
+							"        \"humidity\": \"integer\"\r",
+							"    },\r",
+							"    \"visibility\": \"integer\",\r",
+							"    \"wind\": {\r",
+							"        \"speed\": \"double\",\r",
+							"        \"deg\": \"integer\",\r",
+							"        \"gust\": \"double\"\r",
+							"    },\r",
+							"    \"clouds\": {\r",
+							"        \"all\": \"integer\"\r",
+							"    },\r",
+							"    \"dt\": \"integer\",\r",
+							"    \"sys\": {\r",
+							"        \"type\": \"integer\",\r",
+							"        \"id\": \"integer\",\r",
+							"        \"country\": \"string\",\r",
+							"        \"sunrise\": \"integer\",\r",
+							"        \"sunset\": \"integer\"\r",
+							"    },\r",
+							"    \"timezone\": \"double\",\r",
+							"    \"id\": \"integer\",\r",
+							"    \"name\": \"string\",\r",
+							"    \"cod\": \"integer\"\r",
+							"  };\r",
+							"  pm.test(\"response has valid schema\",function(){\r",
+							"    pm.expect(tv4.validate(response, responseSchema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "683657cb-17d7-4d08-bd05-0176585698f6",
+						"exec": [
+							"pm.globals.set(\"lon\", \"139.5556\");\r",
+							"pm.globals.set(\"lat\", \"35.5556\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/weather?appid={{APIkey}}&lon={{lon}}&lat={{lat}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						}
+					]
+				},
+				"description": "This test should return correct data when lan and lon is correct. "
+			},
+			"response": [
+				{
+					"name": "Request should return correct data when city  is correct (lat lon) geographic coordinates",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?appid={{APIkey}}&lon={{lon}}&lat={{lat}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								},
+								{
+									"key": "lon",
+									"value": "{{lon}}"
+								},
+								{
+									"key": "lat",
+									"value": "{{lat}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:28:10 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "473"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?lat=35.56&lon=139.56"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coord\": {\n        \"lon\": 139.56,\n        \"lat\": 35.56\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04n\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 298.56,\n        \"feels_like\": 298.92,\n        \"temp_min\": 298.15,\n        \"temp_max\": 298.71,\n        \"pressure\": 1006,\n        \"humidity\": 88\n    },\n    \"visibility\": 10000,\n    \"wind\": {\n        \"speed\": 7.2,\n        \"deg\": 200\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1594207608,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 8074,\n        \"country\": \"JP\",\n        \"sunrise\": 1594150392,\n        \"sunset\": 1594202402\n    },\n    \"timezone\": 32400,\n    \"id\": 1851992,\n    \"name\": \"Shiomidai\",\n    \"cod\": 200\n}"
+				},
+				{
+					"name": "Request should return correct data when city  is correct (lat lon) geographic coordinates",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?appid={{APIkey}}&lon={{lon}}&lat={{lat}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								},
+								{
+									"key": "lon",
+									"value": "{{lon}}"
+								},
+								{
+									"key": "lat",
+									"value": "{{lat}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:27:02 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "473"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?lat=35.56&lon=139.56"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coord\": {\n        \"lon\": 139.56,\n        \"lat\": 35.56\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04n\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 298.56,\n        \"feels_like\": 298.92,\n        \"temp_min\": 298.15,\n        \"temp_max\": 298.71,\n        \"pressure\": 1006,\n        \"humidity\": 88\n    },\n    \"visibility\": 10000,\n    \"wind\": {\n        \"speed\": 7.2,\n        \"deg\": 200\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1594207608,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 8074,\n        \"country\": \"JP\",\n        \"sunrise\": 1594150392,\n        \"sunset\": 1594202402\n    },\n    \"timezone\": 32400,\n    \"id\": 1851992,\n    \"name\": \"Shiomidai\",\n    \"cod\": 200\n}"
+				},
+				{
+					"name": "Request should return correct data when city  is correct (lat lon) geographic coordinates",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?appid={{APIkey}}&lon={{lon}}&lat={{lat}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								},
+								{
+									"key": "lon",
+									"value": "{{lon}}"
+								},
+								{
+									"key": "lat",
+									"value": "{{lat}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:26:48 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "473"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?lat=35.56&lon=139.56"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coord\": {\n        \"lon\": 139.56,\n        \"lat\": 35.56\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04n\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 298.56,\n        \"feels_like\": 298.92,\n        \"temp_min\": 298.15,\n        \"temp_max\": 298.71,\n        \"pressure\": 1006,\n        \"humidity\": 88\n    },\n    \"visibility\": 10000,\n    \"wind\": {\n        \"speed\": 7.2,\n        \"deg\": 200\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1594207608,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 8074,\n        \"country\": \"JP\",\n        \"sunrise\": 1594150392,\n        \"sunset\": 1594202402\n    },\n    \"timezone\": 32400,\n    \"id\": 1851992,\n    \"name\": \"Shiomidai\",\n    \"cod\": 200\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return correct data when city name is correct/htlm mode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "93974bdd-d841-4f88-a501-8e1305d526f9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const $ = cheerio.load(pm.response.text())\r",
+							"\r",
+							"pm.test(\"should return a html\", () => { \r",
+							"    pm.expect($('html').text()).to.not.be.empty \r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2ff77d98-0b64-48c3-b95f-d4b64c00c4a9",
+						"exec": [
+							"pm.globals.set(\"q\",\"London\");\r",
+							"pm.globals.set(\"mode_html\", \"html\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?q={{q}}&mode={{mode_html}}&appid={{APIkey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{q}}"
+						},
+						{
+							"key": "mode",
+							"value": "{{mode_html}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "+ Expected correct response html form when given data is correct. Pre-req part - status code 200 and to check is a response returns like html form."
+			},
+			"response": [
+				{
+					"name": "Request should return correct data when city name is correct/htlm mode",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/weather?q={{q}}&mode={{mode_html}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "{{q}}"
+								},
+								{
+									"key": "mode",
+									"value": "{{mode_html}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:26:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2235"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?mode=html&q=london"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <meta name=\"keywords\" content=\"weather, world, openweathermap, weather, layer\" />\n        <meta name=\"description\" content=\"A layer with current weather conditions in cities for world wide\" />\n        <meta name=\"domain\" content=\"openweathermap.org\" />\n        <meta http-equiv=\"pragma\" content=\"no-cache\" />\n        <meta http-equiv=\"Expires\" content=\"-1\" />\n    </head>\n    <body>\n        <div style=\"font-size: medium; font-weight: bold; margin-bottom: 0px;\">London</div>\n        <div style=\"float: left; width: 130px;\">\n            <div style=\"display: block; clear: left;\">\n                <div style=\"float: left;\" title=\"Titel\">\n                    <img height=\"45\" width=\"45\" style=\"border: medium none; width: 45px; height: 45px; background: url(&quot;http://openweathermap.org/img/w/10d.png&quot;) repeat scroll 0% 0% transparent;\" alt=\"title\" src=\"http://openweathermap.org/images/transparent.png\"/>\n                </div>\n                <div style=\"float: left;\">\n                    <div style=\"display: block; clear: left; font-size: medium; font-weight: bold; padding: 0pt 3pt;\" title=\"Current Temperature\">17.83°C</div>\n                    <div style=\"display: block; width: 85px; overflow: visible;\"></div>\n                </div>\n            </div>\n            <div style=\"display: block; clear: left; font-size: small;\">Clouds: 90%</div>\n            <div style=\"display: block; clear: left; color: gray; font-size: x-small;\" >Humidity: 77%</div>\n            <div style=\"display: block; clear: left; color: gray; font-size: x-small;\" >Wind: 2.6 m/s</div>\n            <div style=\"display: block; clear: left; color: gray; font-size: x-small;\" >Pressure: 1015hpa</div>\n        </div>\n        <div style=\"display: block; clear: left; color: gray; font-size: x-small;\">\n            <a href=\"http://openweathermap.org/city/2643743?utm_source=openweathermap&utm_medium=widget&utm_campaign=html_old\" target=\"_blank\">More..</a>\n        </div>\n        <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-31601618-9', 'auto');ga('send', 'pageview');</script>\n    </body>\n</html>"
+				}
+			]
+		},
+		{
+			"name": "Request should return corect data when city name is correct/xml mode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88f004d0-f1d8-491b-9297-63a75116dd9b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9ef5dffc-af03-4081-8eed-e6e9126e58bc",
+						"exec": [
+							"\r",
+							"let cities = [\"Vilnius\", \"Tallinn\", \"Riga\", \"Stockholm\", \"London\", \"Kopenhagen\", \"Berlin\", \"Oslo\", \"Moscow\", \"Taglag\", \"Qabāghlū\", \"Ḩeşār-e Sefīd\"];\r",
+							"let randomCities = cities[Math.floor(Math.random() * cities.length)];\r",
+							"\r",
+							"pm.globals.set(\"q\", randomCities);\r",
+							"\r",
+							"let langCode = [\"lt\", \"en\", \"af\", \"al\", \"ar\", \"az\", \"bg\", \"ca\", \"cz\", \"da\", \"de\", \"el\",\"eu\", \"fa\", \"fi\", \"fr\", \"gl\", \"he\", \"hi\", \"hr\", \"hu\", \"id\", \"it\", \"ja\"];\r",
+							"let randomLang = langCode[Math.floor(Math.random() * langCode.length)];\r",
+							"\r",
+							"pm.globals.set(\"langCode\", randomLang);\r",
+							"\r",
+							"let mainTemp = [\"default\", \"metric\", \"imperial\"];\r",
+							"let randomUnits = mainTemp[Math.floor(Math.random() * mainTemp.length)];\r",
+							"\r",
+							"pm.globals.set(\"mainTemp\", randomUnits);\r",
+							"\r",
+							"let mode = [\"xml\", \"html\", \"json\"];\r",
+							"let randomMode = mode[Math.floor(Math.random() * mode.length)];\r",
+							"\r",
+							"pm.globals.set(\"mode\", randomMode);\r",
+							"\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?q={{q}}&lang={{langCode}}&units={{mainTemp}}&mode={{mode}}&appid={{APIkey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{q}}"
+						},
+						{
+							"key": "lang",
+							"value": "{{langCode}}"
+						},
+						{
+							"key": "units",
+							"value": "{{mainTemp}}"
+						},
+						{
+							"key": "mode",
+							"value": "{{mode}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "I made some random generation: random Cities, random language code, random units for temperature and random mode for xml, html and json formats. It seems works good."
+			},
+			"response": []
+		},
+		{
+			"name": "Request should return validation error when city name is not given",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "907263fd-d87a-4f6f-9aad-fb7292e259c0",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Error code\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"400\");\r",
+							"});\r",
+							"pm.test(\"Error message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Nothing to geocode\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5578e718-06ab-424d-bee6-80cf80a5ee32",
+						"exec": [
+							"pm.globals.set(\"q_empty\", \"\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/weather?appid={{APIkey}}&q={{q_empty}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						},
+						{
+							"key": "q",
+							"value": "{{q_empty}}"
+						}
+					]
+				},
+				"description": "Request without city name (empty) returns status code 400 us a bad request, but it could be error message like - \"City name is required\". "
+			},
+			"response": [
+				{
+					"name": "Request should return validation error when city name is not given",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?appid={{APIkey}}&q={{q_empty}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								},
+								{
+									"key": "q",
+									"value": "{{q_empty}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:36:38 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?q="
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"400\",\n    \"message\": \"Nothing to geocode\"\n}"
+				},
+				{
+					"name": "Request should return validation error when city name is not given",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?appid={{APIkey}}&q={{q_empty}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								},
+								{
+									"key": "q",
+									"value": "{{q_empty}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:31:09 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?q="
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"400\",\n    \"message\": \"Nothing to geocode\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return correct data when ZIP code is correct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74f537d3-d0a3-4561-9865-ed431d0e174c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"City name\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});\r",
+							"var response=pm.response.json();\r",
+							"\r",
+							"var responseSchema = {\r",
+							"     \"coord\": {\r",
+							"        \"lon\": \"double\",\r",
+							"        \"lat\": \"double\"\r",
+							"    },\r",
+							"    \"weather\": [\r",
+							"        {\r",
+							"            \"id\": \"integer\",\r",
+							"            \"main\": \"string\",\r",
+							"            \"description\": \"string\",\r",
+							"            \"icon\": \"string\"\r",
+							"        }\r",
+							"    ],\r",
+							"    \"base\": \"string\",\r",
+							"    \"main\": {\r",
+							"        \"temp\": \"double\",\r",
+							"        \"feels_like\": \"double\",\r",
+							"        \"temp_min\": \"double\",\r",
+							"        \"temp_max\": \"double\",\r",
+							"        \"pressure\": \"integer\",\r",
+							"        \"humidity\": \"integer\"\r",
+							"    },\r",
+							"    \"visibility\": \"integer\",\r",
+							"    \"wind\": {\r",
+							"        \"speed\": \"double\",\r",
+							"        \"deg\": \"integer\"\r",
+							"    },\r",
+							"    \"clouds\": {\r",
+							"        \"all\": \"integer\"\r",
+							"    },\r",
+							"    \"dt\": \"integer\",\r",
+							"    \"sys\": {\r",
+							"        \"type\": \"integer\",\r",
+							"        \"id\": \"integer\",\r",
+							"        \"country\": \"string\",\r",
+							"        \"sunrise\": \"integer\",\r",
+							"        \"sunset\": \"integer\"\r",
+							"    },\r",
+							"    \"timezone\": \"double\",\r",
+							"    \"id\": \"integer\",\r",
+							"    \"name\": \"string\",\r",
+							"    \"cod\": \"integer\"\r",
+							"  };\r",
+							"  pm.test(\"response has valid schema\",function(){\r",
+							"    pm.expect(tv4.validate(response, responseSchema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cc56f712-91e0-4ee3-ab66-782b9dca3942",
+						"exec": [
+							"pm.globals.set(\"zipCode\", \"99501,US\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/weather?zip={{zipCode}}&appid={{APIkey}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "zip",
+							"value": "{{zipCode}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "Give correct zip code to check test result is it correct. Status code 200, returns correct data. For example If changing US to UK:result-not found, bad request."
+			},
+			"response": [
+				{
+					"name": "Request should return correct data when ZIP code is correct",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?zip={{zipCode}}&appid={{APIkey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "zip",
+									"value": "{{zipCode}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:25:54 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "470"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?zip=99501,us"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"coord\": {\n        \"lon\": -149.88,\n        \"lat\": 61.21\n    },\n    \"weather\": [\n        {\n            \"id\": 803,\n            \"main\": \"Clouds\",\n            \"description\": \"broken clouds\",\n            \"icon\": \"04n\"\n        }\n    ],\n    \"base\": \"stations\",\n    \"main\": {\n        \"temp\": 288.36,\n        \"feels_like\": 288.12,\n        \"temp_min\": 287.15,\n        \"temp_max\": 289.15,\n        \"pressure\": 1013,\n        \"humidity\": 72\n    },\n    \"visibility\": 16093,\n    \"wind\": {\n        \"speed\": 0.48,\n        \"deg\": 261\n    },\n    \"clouds\": {\n        \"all\": 75\n    },\n    \"dt\": 1594207554,\n    \"sys\": {\n        \"type\": 1,\n        \"id\": 7756,\n        \"country\": \"US\",\n        \"sunrise\": 1594211933,\n        \"sunset\": 1594279807\n    },\n    \"timezone\": -28800,\n    \"id\": 0,\n    \"name\": \"Anchorage\",\n    \"cod\": 200\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return validation error when ZIP code is incorrect",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "20f80627-53a7-4a92-9fa2-5f18091ca039",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"pm.test(\"Error code should be 400, but not 404\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"404\");\r",
+							"});\r",
+							"pm.test(\"Error message should be bad request, but not city not found\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"city not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1a4f792c-6b70-40a3-9548-aa6e479735fe",
+						"exec": [
+							"pm.globals.set(\"zipCodeInvalid\", \"-013032202535\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/weather?zip={{zipCodeInvalid}}&appid={{APIkey}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "zip",
+							"value": "{{zipCodeInvalid}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "Zip code dosn't have limits. Would be nice to get message with limit of digits. It's possible to enter negative numbers and message error the same - bad request(404)."
+			},
+			"response": [
+				{
+					"name": "Request should return validation error when ZIP code is incorrect",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/weather?zip={{zipCodeInvalid}}&appid={{APIkey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "zip",
+									"value": "{{zipCodeInvalid}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 08:16:05 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/weather?zip=-013032202535"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"404\",\n    \"message\": \"city not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return 10 by default cities if cnt is not given",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "28679725-c727-4987-bdcf-a6a9d24bebcc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response=pm.response.json();\r",
+							"\r",
+							"var responseSchema = {\r",
+							"    \"message\": \"string\",\r",
+							"    \"cod\": \"integer\",\r",
+							"     \"calctime\":\"double\",\r",
+							"     \"count\":\"integer\",\r",
+							"     \"list\":\r",
+							"         {\r",
+							"            \"id\":\"integer\",\r",
+							"            \"name\": \"string\",\r",
+							"            \"coord\": {\r",
+							"                \"Lon\": \"double\",\r",
+							"                \"Lat\": \"double\"\r",
+							"            },\r",
+							"            \"main\": {\r",
+							"                \"temp\": \"integer\",\r",
+							"                \"feels_like\": \"double\",\r",
+							"                \"temp_min\": \"integer\",\r",
+							"                \"temp_max\": \"integer\",\r",
+							"                \"pressure\": \"integer\",\r",
+							"                \"humidity\": \"integer\"\r",
+							"            },\r",
+							"            \"dt\": \"integer\",\r",
+							"            \"wind\": {\r",
+							"                \"speed\": \"double\",\r",
+							"                \"deg\": \"integer\"\r",
+							"            },\r",
+							"            \"sys\": {\r",
+							"                \"country\": \"string\"\r",
+							"            },\r",
+							"            \"rain\": \"string\",\r",
+							"            \"snow\": \"string\",\r",
+							"            \"clouds\": {\r",
+							"                \"all\": \"integer\"\r",
+							"            },\r",
+							"            \"weather\": [\r",
+							"                {\r",
+							"                    \"id\": \"integer\",\r",
+							"                    \"main\": \"string\",\r",
+							"                    \"description\": \"string\",\r",
+							"                    \"icon\": \"string\"\r",
+							"                }\r",
+							"            ]  \r",
+							"         }\r",
+							"  };\r",
+							"\r",
+							"  pm.test(\"response has valid schema\",function(){\r",
+							"    pm.expect(tv4.validate(response, responseSchema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "339437ac-4994-424e-8073-36eea7220e72",
+						"exec": [
+							"pm.globals.get(\"lon\");\r",
+							"pm.globals.get(\"lat\");\r",
+							"pm.globals.get(\"mainTemp\");\r",
+							"pm.globals.get(\"langCode\");\r",
+							"\r",
+							"function randomNum(min, max) { \r",
+							"  return Math.floor(Math.random() * (max - min + 1) + min);\r",
+							"}\r",
+							"\r",
+							"//pm.globals.set(\"cnt\", randomNum(1,50)); -generating random cnt\r",
+							"pm.globals.set(\"cnt\", \"\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/find?lat={{lat}}&lon={{lon}}&cnt={{cnt}}&lang={{langCode}}&units={{mainTemp}}&appid={{APIkey}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"find"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "cnt",
+							"value": "{{cnt}}"
+						},
+						{
+							"key": "lang",
+							"value": "{{langCode}}"
+						},
+						{
+							"key": "units",
+							"value": "{{mainTemp}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "This request returns response with random generated cities number(from 1-50). By default should return 10 cities, if number from 1 til 50 is not chosen, but default returns only 5 cities, but not 10 us is described in API documentation."
+			},
+			"response": [
+				{
+					"name": "Request should return 10 by default cities if cnt is not given",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/find?lat={{lat}}&lon={{lon}}&cnt={{cnt}}&lang={{langCode}}&units={{mainTemp}}&appid={{APIkey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"find"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "{{lat}}"
+								},
+								{
+									"key": "lon",
+									"value": "{{lon}}"
+								},
+								{
+									"key": "cnt",
+									"value": "{{cnt}}"
+								},
+								{
+									"key": "lang",
+									"value": "{{langCode}}"
+								},
+								{
+									"key": "units",
+									"value": "{{mainTemp}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:25:30 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1983"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/find?cnt=&lang=el&lat=35.56&lon=139.56&units=imperial"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"accurate\",\n    \"cod\": \"200\",\n    \"count\": 5,\n    \"list\": [\n        {\n            \"id\": 1851992,\n            \"name\": \"Shiomidai\",\n            \"coord\": {\n                \"lat\": 35.58,\n                \"lon\": 139.53\n            },\n            \"main\": {\n                \"temp\": 77.22,\n                \"feels_like\": 85.69,\n                \"temp_min\": 75,\n                \"temp_max\": 78.01,\n                \"pressure\": 1005,\n                \"humidity\": 86\n            },\n            \"dt\": 1594206357,\n            \"wind\": {\n                \"speed\": 1.01,\n                \"deg\": 175\n            },\n            \"sys\": {\n                \"country\": \"JP\"\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"all\": 100\n            },\n            \"weather\": [\n                {\n                    \"id\": 804,\n                    \"main\": \"Clouds\",\n                    \"description\": \"αυξημένες νεφώσεις\",\n                    \"icon\": \"04n\"\n                }\n            ]\n        },\n        {\n            \"id\": 1852278,\n            \"name\": \"Shimokodanaka\",\n            \"coord\": {\n                \"lat\": 35.57,\n                \"lon\": 139.63\n            },\n            \"main\": {\n                \"temp\": 77.63,\n                \"feels_like\": 76.95,\n                \"temp_min\": 77,\n                \"temp_max\": 78.01,\n                \"pressure\": 1005,\n                \"humidity\": 88\n            },\n            \"dt\": 1594206357,\n            \"wind\": {\n                \"speed\": 18.34,\n                \"deg\": 210\n            },\n            \"sys\": {\n                \"country\": \"JP\"\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"all\": 75\n            },\n            \"weather\": [\n                {\n                    \"id\": 803,\n                    \"main\": \"Clouds\",\n                    \"description\": \"αραιές νεφώσεις\",\n                    \"icon\": \"04n\"\n                }\n            ]\n        },\n        {\n            \"id\": 1907174,\n            \"name\": \"Okura\",\n            \"coord\": {\n                \"lat\": 35.58,\n                \"lon\": 139.47\n            },\n            \"main\": {\n                \"temp\": 76.32,\n                \"feels_like\": 80.78,\n                \"temp_min\": 75,\n                \"temp_max\": 78.01,\n                \"pressure\": 1007,\n                \"humidity\": 78\n            },\n            \"dt\": 1594206358,\n            \"wind\": {\n                \"speed\": 4.7,\n                \"deg\": 190\n            },\n            \"sys\": {\n                \"country\": \"JP\"\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"all\": 75\n            },\n            \"weather\": [\n                {\n                    \"id\": 803,\n                    \"main\": \"Clouds\",\n                    \"description\": \"αραιές νεφώσεις\",\n                    \"icon\": \"04n\"\n                }\n            ]\n        },\n        {\n            \"id\": 1907306,\n            \"name\": \"Komae\",\n            \"coord\": {\n                \"lat\": 35.64,\n                \"lon\": 139.57\n            },\n            \"main\": {\n                \"temp\": 78.01,\n                \"feels_like\": 86.92,\n                \"temp_min\": 78.01,\n                \"temp_max\": 78.01,\n                \"pressure\": 1005,\n                \"humidity\": 86\n            },\n            \"dt\": 1594206580,\n            \"wind\": {\n                \"speed\": 1.01,\n                \"deg\": 175\n            },\n            \"sys\": {\n                \"country\": \"JP\"\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"all\": 100\n            },\n            \"weather\": [\n                {\n                    \"id\": 804,\n                    \"main\": \"Clouds\",\n                    \"description\": \"αυξημένες νεφώσεις\",\n                    \"icon\": \"04n\"\n                }\n            ]\n        },\n        {\n            \"id\": 1859479,\n            \"name\": \"Kikuna\",\n            \"coord\": {\n                \"lat\": 35.5,\n                \"lon\": 139.63\n            },\n            \"main\": {\n                \"temp\": 77.52,\n                \"feels_like\": 76.78,\n                \"temp_min\": 77,\n                \"temp_max\": 78.01,\n                \"pressure\": 1005,\n                \"humidity\": 88\n            },\n            \"dt\": 1594206357,\n            \"wind\": {\n                \"speed\": 18.34,\n                \"deg\": 210\n            },\n            \"sys\": {\n                \"country\": \"JP\"\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"all\": 75\n            },\n            \"weather\": [\n                {\n                    \"id\": 803,\n                    \"main\": \"Clouds\",\n                    \"description\": \"αραιές νεφώσεις\",\n                    \"icon\": \"04n\"\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return correct data  when bbox square degrees limit is in rage 25 square degrees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eca5b1dd-9a63-4c75-84c4-70f4d9734626",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response=pm.response.json();\r",
+							"\r",
+							"var responseSchema = {\r",
+							"    \"cod\": \"integer\",\r",
+							"     \"calctime\":\"double\",\r",
+							"     \"cnt\":\"integer\",\r",
+							"     \"list\":\r",
+							"         {\r",
+							"  \"id\":\"integer\",\r",
+							"  \"dt\": \"integer\",\r",
+							"            \"name\": \"string\",\r",
+							"            \"coord\": {\r",
+							"                \"Lon\": \"double\",\r",
+							"                \"Lat\": \"double\"\r",
+							"            },\r",
+							"            \"main\": {\r",
+							"                \"temp\": \"integer\",\r",
+							"                \"feels_like\": \"double\",\r",
+							"                \"temp_min\": \"integer\",\r",
+							"                \"temp_max\": \"integer\",\r",
+							"                \"pressure\": \"integer\",\r",
+							"                \"humidity\": \"integer\"\r",
+							"            },\r",
+							"            \"visibility\": \"integer\",\r",
+							"            \"wind\": {\r",
+							"                \"speed\": \"double\",\r",
+							"                \"deg\": \"integer\"\r",
+							"            },\r",
+							"            \"rain\": \"string\",\r",
+							"            \"snow\": \"string\",\r",
+							"            \"clouds\": {\r",
+							"                \"today\": \"integer\"\r",
+							"            },\r",
+							"            \"weather\": [\r",
+							"                {\r",
+							"                    \"id\": \"integer\",\r",
+							"                    \"main\": \"string\",\r",
+							"                    \"description\": \"string\",\r",
+							"                    \"icon\": \"string\"\r",
+							"                }\r",
+							"            ]  \r",
+							"         }\r",
+							"  };\r",
+							"\r",
+							"pm.test(\"response has valid schema\",function(){\r",
+							"    pm.expect(tv4.validate(response, responseSchema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6c013264-9e33-4220-b6d6-6a8b5dcaa57a",
+						"exec": [
+							"pm.globals.set(\"bbox\", \"12,32,15,37,15\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://api.openweathermap.org/data/2.5/box/city?bbox={{bbox}}&appid={{APIkey}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"box",
+						"city"
+					],
+					"query": [
+						{
+							"key": "bbox",
+							"value": "{{bbox}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "Test made positive scenario - request returns results what i expected. Response code 200."
+			},
+			"response": [
+				{
+					"name": "Request should return correct data  when bbox square degrees limit is in rage 25 square degrees",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://api.openweathermap.org/data/2.5/box/city?bbox={{bbox}}&appid={{APIkey}}",
+							"protocol": "http",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"box",
+								"city"
+							],
+							"query": [
+								{
+									"key": "bbox",
+									"value": "{{bbox}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:25:17 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "8829"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/box/city?bbox=12,32,15,37,15"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": 200,\n    \"calctime\": 0.002307061,\n    \"cnt\": 24,\n    \"list\": [\n        {\n            \"id\": 2562629,\n            \"dt\": 1594206586,\n            \"name\": \"Qormi\",\n            \"coord\": {\n                \"Lon\": 14.47,\n                \"Lat\": 35.88\n            },\n            \"main\": {\n                \"temp\": 28.69,\n                \"feels_like\": 28.07,\n                \"temp_min\": 26.67,\n                \"temp_max\": 30,\n                \"pressure\": 1016,\n                \"humidity\": 51\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 120\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 20\n            },\n            \"weather\": [\n                {\n                    \"id\": 801,\n                    \"main\": \"Clouds\",\n                    \"description\": \"few clouds\",\n                    \"icon\": \"02d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2562704,\n            \"dt\": 1594206586,\n            \"name\": \"Mosta\",\n            \"coord\": {\n                \"Lon\": 14.43,\n                \"Lat\": 35.91\n            },\n            \"main\": {\n                \"temp\": 28.53,\n                \"feels_like\": 27.85,\n                \"temp_min\": 26.67,\n                \"temp_max\": 30,\n                \"pressure\": 1016,\n                \"humidity\": 51\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 120\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 20\n            },\n            \"weather\": [\n                {\n                    \"id\": 801,\n                    \"main\": \"Clouds\",\n                    \"description\": \"few clouds\",\n                    \"icon\": \"02d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2563191,\n            \"dt\": 1594206586,\n            \"name\": \"Birkirkara\",\n            \"coord\": {\n                \"Lon\": 14.46,\n                \"Lat\": 35.9\n            },\n            \"main\": {\n                \"temp\": 28.61,\n                \"feels_like\": 27.96,\n                \"temp_min\": 26.67,\n                \"temp_max\": 30,\n                \"pressure\": 1016,\n                \"humidity\": 51\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 120\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 20\n            },\n            \"weather\": [\n                {\n                    \"id\": 801,\n                    \"main\": \"Clouds\",\n                    \"description\": \"few clouds\",\n                    \"icon\": \"02d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2562266,\n            \"dt\": 1594206586,\n            \"name\": \"Żabbar\",\n            \"coord\": {\n                \"Lon\": 14.54,\n                \"Lat\": 35.88\n            },\n            \"main\": {\n                \"temp\": 28.59,\n                \"feels_like\": 27.93,\n                \"temp_min\": 26.67,\n                \"temp_max\": 30,\n                \"pressure\": 1016,\n                \"humidity\": 51\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 120\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 20\n            },\n            \"weather\": [\n                {\n                    \"id\": 801,\n                    \"main\": \"Clouds\",\n                    \"description\": \"few clouds\",\n                    \"icon\": \"02d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2210394,\n            \"dt\": 1594206583,\n            \"name\": \"Tagiura\",\n            \"coord\": {\n                \"Lon\": 13.35,\n                \"Lat\": 32.88\n            },\n            \"main\": {\n                \"temp\": 25.9,\n                \"feels_like\": 25.45,\n                \"temp_min\": 25.9,\n                \"temp_max\": 25.9,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 1015,\n                \"humidity\": 62\n            },\n            \"wind\": {\n                \"speed\": 4.66,\n                \"deg\": 349\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 2\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2562305,\n            \"dt\": 1594206586,\n            \"name\": \"Valletta\",\n            \"coord\": {\n                \"Lon\": 14.51,\n                \"Lat\": 35.9\n            },\n            \"main\": {\n                \"temp\": 28.61,\n                \"feels_like\": 27.96,\n                \"temp_min\": 26.67,\n                \"temp_max\": 30,\n                \"pressure\": 1016,\n                \"humidity\": 51\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 120\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 20\n            },\n            \"weather\": [\n                {\n                    \"id\": 801,\n                    \"main\": \"Clouds\",\n                    \"description\": \"few clouds\",\n                    \"icon\": \"02d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2210247,\n            \"dt\": 1594206583,\n            \"name\": \"Tripoli\",\n            \"coord\": {\n                \"Lon\": 13.19,\n                \"Lat\": 32.88\n            },\n            \"main\": {\n                \"temp\": 25.81,\n                \"feels_like\": 25.32,\n                \"temp_min\": 25.81,\n                \"temp_max\": 25.81,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 1014,\n                \"humidity\": 61\n            },\n            \"wind\": {\n                \"speed\": 4.51,\n                \"deg\": 350\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 1\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2216885,\n            \"dt\": 1594206583,\n            \"name\": \"Zawiya\",\n            \"coord\": {\n                \"Lon\": 12.73,\n                \"Lat\": 32.75\n            },\n            \"main\": {\n                \"temp\": 25.94,\n                \"feels_like\": 24.81,\n                \"temp_min\": 25.94,\n                \"temp_max\": 25.94,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 1013,\n                \"humidity\": 56\n            },\n            \"wind\": {\n                \"speed\": 4.71,\n                \"deg\": 359\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2212771,\n            \"dt\": 1594206583,\n            \"name\": \"Şabrātah\",\n            \"coord\": {\n                \"Lon\": 12.49,\n                \"Lat\": 32.79\n            },\n            \"main\": {\n                \"temp\": 26.9,\n                \"feels_like\": 24.97,\n                \"temp_min\": 26.9,\n                \"temp_max\": 26.9,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 1014,\n                \"humidity\": 49\n            },\n            \"wind\": {\n                \"speed\": 5.2,\n                \"deg\": 10\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2210560,\n            \"dt\": 1594206583,\n            \"name\": \"Şurmān\",\n            \"coord\": {\n                \"Lon\": 12.57,\n                \"Lat\": 32.76\n            },\n            \"main\": {\n                \"temp\": 26.91,\n                \"feels_like\": 25.19,\n                \"temp_min\": 26.91,\n                \"temp_max\": 26.91,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 1015,\n                \"humidity\": 50\n            },\n            \"wind\": {\n                \"speed\": 5.07,\n                \"deg\": 7\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2215163,\n            \"dt\": 1594206583,\n            \"name\": \"Masallātah\",\n            \"coord\": {\n                \"Lon\": 14,\n                \"Lat\": 32.62\n            },\n            \"main\": {\n                \"temp\": 26.43,\n                \"feels_like\": 24.39,\n                \"temp_min\": 26.43,\n                \"temp_max\": 26.43,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 987,\n                \"humidity\": 52\n            },\n            \"wind\": {\n                \"speed\": 5.63,\n                \"deg\": 347\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2219905,\n            \"dt\": 1594206583,\n            \"name\": \"Al Khums\",\n            \"coord\": {\n                \"Lon\": 14.26,\n                \"Lat\": 32.65\n            },\n            \"main\": {\n                \"temp\": 25.83,\n                \"feels_like\": 24.96,\n                \"temp_min\": 25.83,\n                \"temp_max\": 25.83,\n                \"pressure\": 1015,\n                \"sea_level\": 1015,\n                \"grnd_level\": 1013,\n                \"humidity\": 65\n            },\n            \"wind\": {\n                \"speed\": 5.69,\n                \"deg\": 345\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 3\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2208425,\n            \"dt\": 1594206583,\n            \"name\": \"Zuwārah\",\n            \"coord\": {\n                \"Lon\": 12.08,\n                \"Lat\": 32.93\n            },\n            \"main\": {\n                \"temp\": 26.36,\n                \"feels_like\": 24.63,\n                \"temp_min\": 26.36,\n                \"temp_max\": 26.36,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 1016,\n                \"humidity\": 55\n            },\n            \"wind\": {\n                \"speed\": 5.63,\n                \"deg\": 16\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2210221,\n            \"dt\": 1594206583,\n            \"name\": \"Tarhuna\",\n            \"coord\": {\n                \"Lon\": 13.63,\n                \"Lat\": 32.44\n            },\n            \"main\": {\n                \"temp\": 29.45,\n                \"feels_like\": 26.3,\n                \"temp_min\": 29.45,\n                \"temp_max\": 29.45,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 973,\n                \"humidity\": 33\n            },\n            \"wind\": {\n                \"speed\": 5.16,\n                \"deg\": 344\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2208485,\n            \"dt\": 1594206583,\n            \"name\": \"Zliten\",\n            \"coord\": {\n                \"Lon\": 14.57,\n                \"Lat\": 32.47\n            },\n            \"main\": {\n                \"temp\": 26.14,\n                \"feels_like\": 25.28,\n                \"temp_min\": 26.14,\n                \"temp_max\": 26.14,\n                \"pressure\": 1015,\n                \"sea_level\": 1015,\n                \"grnd_level\": 1014,\n                \"humidity\": 64\n            },\n            \"wind\": {\n                \"speed\": 5.71,\n                \"deg\": 353\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 3\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2217362,\n            \"dt\": 1594206583,\n            \"name\": \"Gharyan\",\n            \"coord\": {\n                \"Lon\": 13.02,\n                \"Lat\": 32.17\n            },\n            \"main\": {\n                \"temp\": 27.73,\n                \"feels_like\": 23.48,\n                \"temp_min\": 27.73,\n                \"temp_max\": 27.73,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 939,\n                \"humidity\": 23\n            },\n            \"wind\": {\n                \"speed\": 4.38,\n                \"deg\": 333\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2523693,\n            \"dt\": 1594206525,\n            \"name\": \"Pozzallo\",\n            \"coord\": {\n                \"Lon\": 14.85,\n                \"Lat\": 36.73\n            },\n            \"main\": {\n                \"temp\": 30.19,\n                \"feels_like\": 29.04,\n                \"temp_min\": 29.44,\n                \"temp_max\": 31,\n                \"pressure\": 1016,\n                \"humidity\": 43\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 200\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2523192,\n            \"dt\": 1594206525,\n            \"name\": \"Scicli\",\n            \"coord\": {\n                \"Lon\": 14.7,\n                \"Lat\": 36.79\n            },\n            \"main\": {\n                \"temp\": 30.2,\n                \"feels_like\": 29.05,\n                \"temp_min\": 29.44,\n                \"temp_max\": 31,\n                \"pressure\": 1016,\n                \"humidity\": 43\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 200\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2524119,\n            \"dt\": 1594206525,\n            \"name\": \"Modica\",\n            \"coord\": {\n                \"Lon\": 14.77,\n                \"Lat\": 36.85\n            },\n            \"main\": {\n                \"temp\": 29.42,\n                \"feels_like\": 28,\n                \"temp_min\": 27.78,\n                \"temp_max\": 31,\n                \"pressure\": 1016,\n                \"humidity\": 43\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 200\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2208791,\n            \"dt\": 1594206582,\n            \"name\": \"Yafran\",\n            \"coord\": {\n                \"Lon\": 12.53,\n                \"Lat\": 32.06\n            },\n            \"main\": {\n                \"temp\": 27.78,\n                \"feels_like\": 22.68,\n                \"temp_min\": 27.78,\n                \"temp_max\": 27.78,\n                \"pressure\": 1016,\n                \"sea_level\": 1016,\n                \"grnd_level\": 941,\n                \"humidity\": 21\n            },\n            \"wind\": {\n                \"speed\": 5.26,\n                \"deg\": 351\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2522713,\n            \"dt\": 1594206525,\n            \"name\": \"Vittoria\",\n            \"coord\": {\n                \"Lon\": 14.53,\n                \"Lat\": 36.95\n            },\n            \"main\": {\n                \"temp\": 29.61,\n                \"feels_like\": 28.26,\n                \"temp_min\": 27.78,\n                \"temp_max\": 31,\n                \"pressure\": 1016,\n                \"humidity\": 43\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 200\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2523581,\n            \"dt\": 1594206525,\n            \"name\": \"Rosolini\",\n            \"coord\": {\n                \"Lon\": 14.95,\n                \"Lat\": 36.82\n            },\n            \"main\": {\n                \"temp\": 30.14,\n                \"feels_like\": 28.97,\n                \"temp_min\": 29.44,\n                \"temp_max\": 31,\n                \"pressure\": 1016,\n                \"humidity\": 43\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 200\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2524955,\n            \"dt\": 1594206526,\n            \"name\": \"Comiso\",\n            \"coord\": {\n                \"Lon\": 14.61,\n                \"Lat\": 36.95\n            },\n            \"main\": {\n                \"temp\": 29.7,\n                \"feels_like\": 28.38,\n                \"temp_min\": 27.78,\n                \"temp_max\": 31,\n                \"pressure\": 1016,\n                \"humidity\": 43\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 200\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        },\n        {\n            \"id\": 2523650,\n            \"dt\": 1594206526,\n            \"name\": \"Ragusa\",\n            \"coord\": {\n                \"Lon\": 14.72,\n                \"Lat\": 36.93\n            },\n            \"main\": {\n                \"temp\": 29.5,\n                \"feels_like\": 28.11,\n                \"temp_min\": 27.78,\n                \"temp_max\": 31,\n                \"pressure\": 1016,\n                \"humidity\": 43\n            },\n            \"visibility\": 10000,\n            \"wind\": {\n                \"speed\": 4.6,\n                \"deg\": 200\n            },\n            \"rain\": null,\n            \"snow\": null,\n            \"clouds\": {\n                \"today\": 0\n            },\n            \"weather\": [\n                {\n                    \"id\": 800,\n                    \"main\": \"Clear\",\n                    \"description\": \"clear sky\",\n                    \"icon\": \"01d\"\n                }\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return error message with square degrees limit when bbox  is more when 25 square degrees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ceb2b095-e6a5-4980-bd7b-cc7e2e026781",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Error message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Requested area is larger than allowed for your account type (25.00 square degrees)\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "26010696-d09e-4f43-a8e5-1d5ef0324dc9",
+						"exec": [
+							"pm.globals.set(\"tooLargeArea\", \"12,32,15,7\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://api.openweathermap.org/data/2.5/box/city?bbox={{tooLargeArea}}&appid={{APIkey}}",
+					"protocol": "http",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"box",
+						"city"
+					],
+					"query": [
+						{
+							"key": "bbox",
+							"value": "{{tooLargeArea}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "This test checks if request returns error message when requested area is larger than allowed ( allowed 25.00 square degrees).\r\n"
+			},
+			"response": [
+				{
+					"name": "Request should return error message with square degrees limit when bbox  is more when 25 square degrees",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://api.openweathermap.org/data/2.5/box/city?bbox={{tooLargeArea}}&appid={{APIkey}}",
+							"protocol": "http",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"box",
+								"city"
+							],
+							"query": [
+								{
+									"key": "bbox",
+									"value": "{{tooLargeArea}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:24:52 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "108"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/box/city?bbox=12,32,15,7"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"400\",\n    \"message\": \"Requested area is larger than allowed for your account type (25.00 square degrees)\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return error message when bbox instead number is given letter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c941774-afbf-45dd-8802-eafa9829b431",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Error message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"is not a float\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "65e5d5ee-cf30-4c10-81ec-6d3b765aa850",
+						"exec": [
+							"pm.globals.set(\"notAfloat\", \"a,24,12,37\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/box/city?bbox={{notAfloat}}&appid={{APIkey}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"box",
+						"city"
+					],
+					"query": [
+						{
+							"key": "bbox",
+							"value": "{{notAfloat}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "This test checks if request returns error message when requested area is letter or *,-,+,/,@,$,%,^,&. "
+			},
+			"response": [
+				{
+					"name": "Request should return error message when bbox instead number is given letter",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/box/city?bbox={{notAfloat}}&appid={{APIkey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"box",
+								"city"
+							],
+							"query": [
+								{
+									"key": "bbox",
+									"value": "{{notAfloat}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:24:43 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/box/city?bbox=a,24,12,37"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"400\",\n    \"message\": \"\\\"a\\\" is not a float\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return error message when bbox data is not a float when instead number is given #, but returns  401 - unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "90ecc130-d5d7-4bd4-bf10-da5efcd37f1e",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"pm.test(\"Error message\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Invalid API key\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "366d23c4-65a0-4d4d-b0b1-4d52f45da016",
+						"exec": [
+							"pm.globals.set(\"bboxIncluded#\", \"#,24,12,37\");\r",
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/box/city?bbox={{bboxIncluded#}}&appid={{APIkey}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"box",
+						"city"
+					],
+					"query": [
+						{
+							"key": "bbox",
+							"value": "{{bboxIncluded#}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "This test checks if request returns error code 400(bad request) and error message about not a float value when in requested area is #. Returns error code 401-Unauthorized, message-Invalid API key..It's a bug."
+			},
+			"response": [
+				{
+					"name": "Request should return error message when bbox data is not a float when instead number is given #, but returns  401 - unauthorized",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "api.openweathermap.org/data/2.5/box/city?bbox={{bboxIncluded#}}&appid={{APIkey}}",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"box",
+								"city"
+							],
+							"query": [
+								{
+									"key": "bbox",
+									"value": "{{bboxIncluded#}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 11:24:31 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "107"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/2.5/box/city?bbox="
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": 401,\n    \"message\": \"Invalid API key. Please see http://openweathermap.org/faq#error401 for more info.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Request should return code error 500 Internal server error when 2.5 is not given",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7563f77f-ab1b-46fe-a18b-68d2dfbf26a9",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"pm.test(\"Error code should be 500, but not 404\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"404\");\r",
+							"});\r",
+							"pm.test(\"Error messag\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Internal error\");\r",
+							"});\r",
+							"\r",
+							"pm.globals.get(\"q\");\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "724a8aae-1b2c-4463-8702-9d46bf393771",
+						"exec": [
+							"pm.globals.set(\"APIkey\", \"5febbcd18eedf37bc8c9f59be6c54be9\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "appid",
+						"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/weather?q={{q}}&appid={{APIkey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{q}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{APIkey}}"
+						}
+					]
+				},
+				"description": "I wanted to check what returns request when /2.5/ is not given ()i guess it's some internal value. I got response with 404 code-bad request, but error message - Internal Error. It would be nice to get error code 500. Sounds like a bug!"
+			},
+			"response": [
+				{
+					"name": "Request should return code error 500 Internal server error when 2.5 is not given",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "appid",
+								"value": "5febbcd18eedf37bc8c9f59be6c54be9",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/weather?q={{q}}&appid={{APIkey}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "{{q}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{APIkey}}"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "openresty"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 08 Jul 2020 08:21:59 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Cache-Key",
+							"value": "/data/weather?q=taglag"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cod\": \"404\",\n    \"message\": \"Internal error\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c450b880-be09-467d-a263-54bd2781d5cf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "33dd4ae9-b29b-46cf-bb55-3b72742a8542",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
